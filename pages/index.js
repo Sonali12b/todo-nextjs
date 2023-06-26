@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Container, Text,Input,Button,Notification } from "@nextui-org/react";
+import { Container, Text,Input,Button,Card,Spacer, Checkbox } from "@nextui-org/react";
 
 const TodoApp = () => {
   const [todos, setTodos] = useState([]);
@@ -42,12 +42,6 @@ const TodoApp = () => {
     );
   };
 
-  // const markTodo = (id) => {
-  //   setTodos(
-  //     todos.map((todo) => (todo.id === id ? { ...todo, done: !todo.done } : todo))
-  //   );
-  // };
-
   const updateTodo = (id, newText) => {
     setTodos(
       todos.map(todo => (todo.id === id ? { ...todo, text: newText } : todo))
@@ -55,24 +49,26 @@ const TodoApp = () => {
   };
 
   return (
-    <Container css={{ p: "2rem", background: "$pink100", h:"100vh", mt:"2rem", w:"70%" }}>
+    <Container css={{ p: "2rem", background: "$pink100", minHeight:"100vh", w:"70%" }}>
       <Text
         h1
         size={60}
         css={{
-          textGradient: "45deg, $blue600 -20%, $pink600 50%",
+          textGradient: "45deg, #080F61 0%, #FF1A16 100%",
         }}
         weight="bold"
       >
         Todo App
       </Text>
-      <form onSubmit={addTodo}>
+      <Card css={{p:"2rem"}}>
+      <form onSubmit={addTodo} >
         <Input
           type="text"
           value={input}
           onChange={e => setInput(e.target.value)}
           placeholder="Add a new todo"
         />
+        <Spacer y={0.5} />
         <Button
           type="submit"
           gradient
@@ -85,6 +81,8 @@ const TodoApp = () => {
           Add Todo
         </Button>
       </form>
+      </Card>
+      <Container css={{p:"2rem" }}>
       <ul>
         {todos.map(todo => (
           <li
@@ -94,25 +92,20 @@ const TodoApp = () => {
               display: "flex",
               alignItems: "center",
               gap: "0.5rem",
-              animation: "fade-slide 0.3s ease-in",
-              "@keyframes fade-slide": {
-                "0%": {
-                  opacity: 0,
-                  transform: "translateX(-10px)",
-                },
-                "100%": {
-                  opacity: 1,
-                  transform: "translateX(0)",
-                },
-              },
             }}
           >
-            <input
+            {/* <Input
               type="checkbox"
               checked={todo.done}
               onChange={() => toggleTodo(todo.id)}
-            />
+            /> */}
+            <Checkbox defaultSelected size="xs" checked={todo.done}
+            onChange={() => toggleTodo(todo.id)}>
+            
+          </Checkbox>
+          {/* <Spacer /> */}
             <Input
+              underlined
               type="text"
               value={todo.text}
               onChange={e => updateTodo(todo.id, e.target.value)}
@@ -120,23 +113,23 @@ const TodoApp = () => {
             <Button
               className="delete"
               auto
+              // color="error"
               ghost
               onClick={() => deleteTodo(todo.id)}
               css={{
                 opacity: 0.7,
                 p:"2px",
-                transition: "opacity 0.3s ease-in-out",
-                "&:hover": {
-                  opacity: 1,
-                  
-                },
+                color:"red",
+                border:"none"
               }}
             >
               Delete
             </Button>
           </li>
         ))}
+          <Spacer y={1.5} />
       </ul>
+      </Container>
     </Container>
   );
 };
