@@ -15,7 +15,7 @@ class MyDocument extends Document {
     return (
       <Html lang="en">
         <Head>{CssBaseline.flush()}</Head>
-        <body style={{background:"#FFEEBB", height:"100vh"}}>
+        <body style={{height:"100vh"}}>
           <Main />
           <NextScript />
         </body>
